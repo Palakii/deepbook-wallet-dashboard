@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/deepbook-wallet-dashboard.html"
+    }
+  ]
+}

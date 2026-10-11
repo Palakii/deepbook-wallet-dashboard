@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeepBook Wallet Dashboard</title>
+  <style>
+    :root { color-scheme: dark; --bg:#0b1020; --panel:#121a2d; --panel-2:#17223a; --line:#293752; --text:#edf3ff; --muted:#9baccc; --accent:#56d7ba; --blue:#78a9ff; --danger:#ff8c98; --warn:#ffd37a; }
+    * { box-sizing:border-box } body { margin:0; min-width:320px; background:radial-gradient(900px 500px at 10% -10%,#1a315e 0%,transparent 65%),var(--bg); color:var(--text); font-family:ui-sans-serif,system-ui,-apple-system,"Noto Sans Thai",Arial,sans-serif; }
+    .wrap { max-width:1240px; margin:auto; padding:28px 18px 54px; } h1 { margin:0; font-size:clamp(1.5rem,3vw,2.25rem); letter-spacing:-.035em } h2 { font-size:1.13rem; margin:0; letter-spacing:-.015em } .sub { color:var(--muted); margin:7px 0 23px; font-size:.94rem } .panel { background:rgba(18,26,45,.94); border:1px solid var(--line); border-radius:14px; padding:18px; box-shadow:0 12px 30px rgba(0,0,0,.16); margin-top:16px; } .section-head { display:flex; align-items:center; gap:10px; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--line) } .section-mark { width:4px; height:22px; flex:0 0 auto; background:var(--accent); border-radius:99px }.section-copy { min-width:0 }.eyebrow { margin:0 0 2px; color:var(--accent); font-size:.68rem; font-weight:800; letter-spacing:.11em; text-transform:uppercase }.section-desc { margin:3px 0 0; color:var(--muted); font-size:.81rem }
+    .controls { display:grid; grid-template-columns:1.1fr 1.1fr 1.7fr auto; gap:13px; align-items:end } label { display:block; color:var(--muted); font-size:.82rem; margin:0 0 7px } input,select,button { font:inherit; border-radius:9px; min-height:42px } input,select { width:100%; padding:9px 11px; color:var(--text); background:#0c1427; border:1px solid var(--line); } input[readonly] { color:#9fb2d9; background:#10192c; cursor:not-allowed } button { border:0; padding:0 18px; color:#06141d; background:var(--accent); cursor:pointer; font-weight:750; white-space:nowrap } button:hover { filter:brightness(1.08) } button:disabled { opacity:.55; cursor:wait }
+    .note { margin:13px 0 0; color:var(--muted); font-size:.8rem; line-height:1.55 } .range { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0 0 } .range button { min-height:34px; padding:0 13px; background:var(--panel-2); color:var(--muted); border:1px solid var(--line); font-size:.86rem }.range button.active { color:#07141a; border-color:var(--accent); background:var(--accent) }
+    .status { min-height:24px; margin:13px 1px 0; color:var(--muted); font-size:.88rem }.status.error { color:var(--danger) }.status.warning { color:var(--warn) }.hidden { display:none!important }.cards { display:grid; grid-template-columns:repeat(4,1fr); gap:12px }.card { background:linear-gradient(145deg,#1b2945,#152039); border:1px solid var(--line); border-radius:12px; padding:15px; min-height:110px }.card span { display:block; color:#b8c7e5; font-size:.76rem; font-weight:750; letter-spacing:.055em; text-transform:uppercase }.card strong { display:block; margin-top:10px; font-size:clamp(1.15rem,2.3vw,1.55rem); overflow-wrap:anywhere }.unit { color:var(--muted); font-size:.78rem; margin:10px 0 0; }.fee-layout { display:grid; grid-template-columns:minmax(240px,1fr) 1.35fr; gap:18px; align-items:stretch }.fee-controls { display:grid; grid-template-columns:1fr 1fr; gap:12px; align-content:start }.fee-rate { position:relative }.fee-rate input { padding-right:32px }.fee-rate::after { content:'%'; position:absolute; right:12px; bottom:11px; color:var(--muted); font-size:.85rem; pointer-events:none }.fee-result { background:linear-gradient(145deg,#173a3b,#132d35); border:1px solid #27726b; border-radius:12px; padding:17px }.fee-result span { display:block; font-size:.76rem; color:#b9dad7; font-weight:800; letter-spacing:.06em; text-transform:uppercase }.fee-result strong { display:block; margin-top:8px; font-size:clamp(1.55rem,4vw,2.2rem) }.fee-result p { margin:8px 0 0; color:#b1cac9; font-size:.8rem; line-height:1.5 }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:10px } table { width:100%; border-collapse:collapse; min-width:520px } th,td { padding:12px 14px; text-align:right; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums } th { color:var(--muted); font-size:.77rem; background:#10182b; text-transform:uppercase; letter-spacing:.04em } th:first-child,td:first-child { text-align:left } tr:last-child td { border:0 }.empty { padding:28px 16px; text-align:center; color:var(--muted) }.portfolio { display:grid; grid-template-columns:repeat(auto-fit,minmax(195px,1fr)); gap:11px }.asset { background:var(--panel-2); border:1px solid var(--line); border-radius:11px; padding:13px }.asset-name { font-weight:700 }.asset-value { margin-top:7px; font-size:1.04rem }.asset-detail { color:var(--muted); font-size:.8rem; margin-top:5px; overflow-wrap:anywhere }.footer { margin-top:17px; font-size:.79rem; color:var(--muted); line-height:1.6 }.footer a { color:var(--blue) }
+    @media(max-width:830px){.controls{grid-template-columns:1fr 1fr}.controls button{width:100%}.cards{grid-template-columns:repeat(2,1fr)}} @media(max-width:520px){.controls{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.wrap{padding:20px 12px 40px}.panel{padding:14px}}
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <h1>DeepBook Wallet Dashboard</h1>
+  <p class="sub">Track maker / taker activity and collateral for your DeepBook wallet.</p>
+  <section class="panel">
+    <div class="controls">
+      <div><label for="wallet">Wallet Address</label><input id="wallet" spellcheck="false" value="0x04f840773dbbd2e6ed2f08d8d6d75ce10edc8c1c0b3eb5d587c18edbda790b66"></div>
+      <div><label for="manager">BalanceManager ID · locked</label><input id="manager" readonly spellcheck="false" value="0x6bbe300768fb272531795c41d5b8258b88875b7799e0501e01ce98eba3d8dcda"></div>
+      <div><label for="pools">Pools · comma separated</label><input id="pools" spellcheck="false" value="SUI_USDC, DEEP_USDC, DEEP_SUI, WAL_USDC, XBTC_USDC"></div>
+      <button id="load" type="button">Load data</button>
+    </div>
+    <div class="range" aria-label="Time range"><button data-range="day">1 Day</button><button data-range="week" class="active">1 Week</button><button data-range="all">All Time</button></div>
+    <p class="note">Volumes use quote assets. USDC pools are converted with 10⁶; DEEP_SUI uses the latest SUI_USDC price, so historical USD values are estimates.</p>
+    <div id="status" class="status" role="status" aria-live="polite">Ready to load data</div>
+  </section>
+
+  <section class="panel"><div class="section-head"><div class="section-mark"></div><div class="section-copy"><p class="eyebrow">Overview</p><h2>Selected period summary</h2><p class="section-desc">Estimated USD volume across your selected pools.</p></div></div><div class="cards"><div class="card"><span>Maker volume</span><strong id="maker">—</strong></div><div class="card"><span>Taker volume</span><strong id="taker">—</strong></div><div class="card"><span>Total volume</span><strong id="total">—</strong></div><div class="card"><span>Active days</span><strong id="days">—</strong></div></div><p class="unit">USD values are rounded to whole dollars.</p></section>
+  <section class="panel"><div class="section-head"><div class="section-mark"></div><div class="section-copy"><p class="eyebrow">Fees</p><h2>Estimated trading fees</h2><p class="section-desc">Apply your own fee rates to the selected period’s estimated USD volume.</p></div></div><div class="fee-layout"><div class="fee-controls"><div class="fee-rate"><label for="makerRate">Maker fee rate</label><input id="makerRate" type="number" min="0" step="0.001" value="0.000" inputmode="decimal"></div><div class="fee-rate"><label for="takerRate">Taker fee rate</label><input id="takerRate" type="number" min="0" step="0.001" value="0.000" inputmode="decimal"></div></div><div class="fee-result"><span>Estimated gross fees</span><strong id="estimatedFees">—</strong><p id="feeBreakdown">Load volume data, then enter the applicable maker and taker fee rates. Rates are percentages.</p></div></div><p class="unit">Estimate only: excludes DEEP rebates, referral rewards, fee-tier changes, and transaction gas.</p></section>
+  <section class="panel"><div class="section-head"><div class="section-mark"></div><div class="section-copy"><p class="eyebrow">Activity</p><h2>Daily volume</h2><p class="section-desc">Maker and taker volume grouped by UTC day.</p></div></div><div id="volumeEmpty" class="empty">Click “Load data” to view daily volume.</div><div id="volumeTable" class="table-wrap hidden"><table><thead><tr><th>Date</th><th>Maker</th><th>Taker</th><th>Total</th></tr></thead><tbody id="volumeBody"></tbody></table></div></section>
+  <section class="panel"><div class="section-head"><div class="section-mark"></div><div class="section-copy"><p class="eyebrow">Assets</p><h2>Portfolio & collateral</h2><p class="section-desc">Deposited balances and liquidity positions reported by the indexer.</p></div></div><div id="portfolio" class="portfolio"><div class="empty">Portfolio has not been loaded yet.</div></div></section>
+  <p class="footer">Data is retrieved directly from the public DeepBook Indexer in your browser. If you see a CORS or network error, try serving this file from HTTPS rather than <code>file://</code>, or try again later. This static dashboard cannot bypass browser CORS restrictions. API reference: <a href="https://docs.sui.io/concepts/defi/deepbook" target="_blank" rel="noreferrer">DeepBook documentation</a>.</p>
+</main>
+<script>
+(() => {
+  'use strict';
+  const BASE = 'https://deepbook-indexer.mainnet.mystenlabs.com';
+  const ALL_TIME_START = Date.UTC(2026, 8, 24) / 1000;
+  const $ = id => document.getElementById(id);
+  const ui = { wallet:$('wallet'), manager:$('manager'), pools:$('pools'), load:$('load'), status:$('status'), maker:$('maker'), taker:$('taker'), total:$('total'), days:$('days'), body:$('volumeBody'), table:$('volumeTable'), empty:$('volumeEmpty'), portfolio:$('portfolio'), makerRate:$('makerRate'), takerRate:$('takerRate'), estimatedFees:$('estimatedFees'), feeBreakdown:$('feeBreakdown') };
+  let selectedRange = 'week';
+  let latestVolumes = null;
+  const money = new Intl.NumberFormat('en-US', { style:'currency', currency:'USD', minimumFractionDigits:0, maximumFractionDigits:0 });
+  const number = new Intl.NumberFormat('en-US', { maximumFractionDigits:0 });
+  function setStatus(message, type='') { ui.status.textContent = message; ui.status.className = `status ${type}`; }
+  function safeNumber(value) { const n = Number(value); return Number.isFinite(n) ? n : 0; }
+  function renderFees() { if (!latestVolumes) return; const makerRate=Math.max(0,safeNumber(ui.makerRate.value))/100, takerRate=Math.max(0,safeNumber(ui.takerRate.value))/100; const makerFee=latestVolumes.maker*makerRate, takerFee=latestVolumes.taker*takerRate; ui.estimatedFees.textContent=money.format(makerFee+takerFee); ui.feeBreakdown.textContent=`Maker: ${money.format(makerFee)} at ${ui.makerRate.value || 0}% · Taker: ${money.format(takerFee)} at ${ui.takerRate.value || 0}%`; }
+  function cleanPools() { return [...new Set(ui.pools.value.split(',').map(x => x.trim().toUpperCase()).filter(Boolean))]; }
+  function dateRange() { const end = Math.floor(Date.now()/1000); const start = selectedRange === 'day' ? end-86400 : selectedRange === 'week' ? end-(86400*7) : ALL_TIME_START; return { start:Math.min(start,end), end }; }
+  async function getJson(path) { const res = await fetch(`${BASE}${path}`, { headers:{Accept:'application/json'} }); if (!res.ok) throw new Error(`Indexer returned HTTP ${res.status}`); return res.json(); }
+  function poolMap(poolsJson) { const list = Array.isArray(poolsJson) ? poolsJson : (poolsJson.pools || []); return new Map(list.map(p => [String(p.pool_name || p.name || '').toUpperCase(), p])); }
+  function tickerPrice(ticker) { const row = ticker.SUI_USDC || ticker.USDC_SUI; return safeNumber(row && (row.last_price ?? row.price)); }
+  function quoteMultiplier(poolName, metadata, suiUsd) {
+    const p = metadata.get(poolName); const quote = String(p?.quote_asset_symbol || poolName.split('_').at(-1) || '').toUpperCase();
+    const decimals = Number.isInteger(p?.quote_asset_decimals) ? p.quote_asset_decimals : ({USDC:6,SUI:9,USDT:6}[quote] ?? 6);
+    if (quote === 'USDC' || quote === 'USDT') return { multiplier: 10 ** -decimals, warning:'' };
+    if (quote === 'SUI' && suiUsd > 0) return { multiplier: (10 ** -decimals) * suiUsd, warning:'DEEP_SUI uses the latest SUI price' };
+    return { multiplier: 0, warning:`${poolName} (${quote}) could not be converted to USD and was excluded` };
+  }
+  function intervalStart(key) { const m = String(key).match(/\d{10,}/); return m ? Number(m[0]) : 0; }
+  function renderVolumes(data, metadata, ticker) {
+    const rows=[]; const warnings=new Set(); const suiUsd=tickerPrice(ticker);
+    for (const [bucket, byPool] of Object.entries(data || {})) {
+      let maker=0,taker=0;
+      for (const [poolNameRaw, pair] of Object.entries(byPool || {})) {
+        const poolName=poolNameRaw.toUpperCase(); const c=quoteMultiplier(poolName,metadata,suiUsd); if (c.warning) warnings.add(c.warning);
+        const values=Array.isArray(pair) ? pair : [pair?.maker_volume ?? pair?.maker ?? 0, pair?.taker_volume ?? pair?.taker ?? 0];
+        maker += safeNumber(values[0]) * c.multiplier; taker += safeNumber(values[1]) * c.multiplier;
+      }
+      if (maker || taker) rows.push({ stamp:intervalStart(bucket), maker, taker, total:maker+taker });
+    }
+    rows.sort((a,b)=>b.stamp-a.stamp); const maker=rows.reduce((s,r)=>s+r.maker,0), taker=rows.reduce((s,r)=>s+r.taker,0);
+    ui.maker.textContent=money.format(maker); ui.taker.textContent=money.format(taker); ui.total.textContent=money.format(maker+taker); ui.days.textContent=number.format(rows.length); latestVolumes={maker,taker}; renderFees();
+    if (!rows.length) { ui.table.classList.add('hidden'); ui.empty.classList.remove('hidden'); ui.empty.textContent='No volume was found for the selected period.'; }
+    else { ui.body.replaceChildren(...rows.map(r => { const tr=document.createElement('tr'); const date=r.stamp ? new Date(r.stamp*1000).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric',timeZone:'UTC'}) : '—'; tr.innerHTML=`<td>${date}</td><td>${money.format(r.maker)}</td><td>${money.format(r.taker)}</td><td>${money.format(r.total)}</td>`; return tr;})); ui.empty.classList.add('hidden');ui.table.classList.remove('hidden'); }
+    return [...warnings];
+  }
+  function candidates(node) { if (!node || typeof node !== 'object') return []; if (Array.isArray(node)) return node.flatMap(candidates); const own = node.asset || node.symbol || node.coin_symbol || node.name ? [node] : []; return own.concat(...Object.values(node).flatMap(v => typeof v === 'object' && v ? candidates(v) : [])); }
+  function renderPortfolio(data) {
+    const raw=candidates(data); const unique=[]; const seen=new Set();
+    raw.forEach(x=>{const label=String(x.asset || x.symbol || x.coin_symbol || x.name || 'Asset'); const value=x.usd_value ?? x.value_usd ?? x.usdValue ?? x.balance_usd ?? x.supplied_usd ?? x.value; const amount=x.balance ?? x.amount ?? x.quantity ?? x.available_balance ?? x.supplied; const key=`${label}|${value}|${amount}`; if(!seen.has(key)){seen.add(key);unique.push({label,value,amount});}});
+    if(!unique.length){ui.portfolio.innerHTML='<div class="empty">No collateral or portfolio data was found for this wallet.</div>';return;}
+    ui.portfolio.replaceChildren(...unique.slice(0,60).map(a=>{const el=document.createElement('article');el.className='asset';const value=safeNumber(a.value);el.innerHTML=`<div class="asset-name"></div><div class="asset-value">${Number.isFinite(Number(a.value)) ? money.format(value) : '—'}</div><div class="asset-detail"></div>`;el.querySelector('.asset-name').textContent=a.label;el.querySelector('.asset-detail').textContent=a.amount !== undefined ? `Balance: ${String(a.amount)}` : 'USD value from Indexer';return el;}));
+  }
+  async function load() {
+    const pools=cleanPools(), manager=ui.manager.value.trim(), wallet=ui.wallet.value.trim();
+    if(!pools.length || !/^0x[0-9a-fA-F]+$/.test(manager) || !/^0x[0-9a-fA-F]+$/.test(wallet)){setStatus('Check the wallet, BalanceManager ID, and pool list.','error');return;}
+    ui.load.disabled=true; setStatus('Loading data from the DeepBook Indexer…'); ui.portfolio.innerHTML='<div class="empty">Loading portfolio…</div>';
+    const {start,end}=dateRange(); const path=`/historical_volume_by_balance_manager_id_with_interval/${encodeURIComponent(pools.join(','))}/${encodeURIComponent(manager)}?start_time=${start}&end_time=${end}&interval=86400&volume_in_base=false`;
+    const settled=await Promise.allSettled([getJson(path),getJson('/get_pools'),getJson('/ticker'),getJson(`/portfolio/${encodeURIComponent(wallet)}`)]);
+    const [volumes,poolInfo,ticker,portfolio]=settled;
+    if(volumes.status==='rejected'){setStatus(`Could not load volume: ${volumes.reason.message}. Check CORS, your connection, and pool names.`, 'error'); ui.load.disabled=false; return;}
+    const warnings=renderVolumes(volumes.value, poolMap(poolInfo.status==='fulfilled'?poolInfo.value:[]), ticker.status==='fulfilled'?ticker.value:{});
+    if(portfolio.status==='fulfilled') renderPortfolio(portfolio.value); else ui.portfolio.innerHTML='<div class="empty">Portfolio could not be loaded — check the wallet address or try again.</div>';
+    const extras=[...warnings]; if(poolInfo.status==='rejected')extras.push('pool metadata was unavailable; standard decimals were used'); if(ticker.status==='rejected')extras.push('latest SUI price was unavailable'); if(portfolio.status==='rejected')extras.push('portfolio was unavailable');
+    setStatus(extras.length ? `Data loaded: ${extras.join(' • ')}` : 'Data loaded successfully.', extras.length ? 'warning' : ''); ui.load.disabled=false;
+  }
+  document.querySelectorAll('[data-range]').forEach(button=>button.addEventListener('click',()=>{selectedRange=button.dataset.range;document.querySelectorAll('[data-range]').forEach(x=>x.classList.toggle('active',x===button));})); ui.load.addEventListener('click',load); ui.makerRate.addEventListener('input',renderFees); ui.takerRate.addEventListener('input',renderFees);
+})();
+</script>
+</body>
+</html>
